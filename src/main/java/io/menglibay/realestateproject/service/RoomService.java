@@ -1,7 +1,6 @@
 package io.menglibay.realestateproject.service;
 
-import io.menglibay.realestateproject.model.Room;
-import io.menglibay.realestateproject.model.User;
+import io.menglibay.realestateproject.entity.Room;
 import io.menglibay.realestateproject.repository.RoomRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

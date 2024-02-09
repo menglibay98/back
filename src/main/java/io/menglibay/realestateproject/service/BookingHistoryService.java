@@ -1,7 +1,7 @@
 package io.menglibay.realestateproject.service;
 
-import io.menglibay.realestateproject.model.BookingHistory;
-import io.menglibay.realestateproject.model.Room;
+import io.menglibay.realestateproject.entity.BookingHistory;
+import io.menglibay.realestateproject.entity.Room;
 import io.menglibay.realestateproject.repository.BookHistoryRepository;
 import io.menglibay.realestateproject.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +29,10 @@ public class BookingHistoryService {
         return bookHistoryRepository.findByRoomId(roomId);
     }
 
-    public void bookRoom(int roomId,BookingHistory bookingHistory){
+    public BookingHistory create(int roomId,BookingHistory bookingHistory){
         Room room = roomRepository.findById(roomId).orElseThrow(() -> new RuntimeException("Room not found"));
         bookingHistory.setRoom(room);
-        bookHistoryRepository.save(bookingHistory);
+        return bookHistoryRepository.save(bookingHistory);
     }
 
     public void setRoomFree(int roomId){
@@ -58,6 +58,11 @@ public class BookingHistoryService {
 
     public void deleteBookHistory(int id){
         bookHistoryRepository.deleteById(id);
+    }
+
+    public BookingHistory getBookingHistoryById(int id) {
+        return bookHistoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking History not found"));
     }
 
 

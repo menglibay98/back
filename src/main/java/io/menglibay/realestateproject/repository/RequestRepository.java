@@ -1,6 +1,6 @@
 package io.menglibay.realestateproject.repository;
 
-import io.menglibay.realestateproject.model.Request;
+import io.menglibay.realestateproject.entity.Request;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

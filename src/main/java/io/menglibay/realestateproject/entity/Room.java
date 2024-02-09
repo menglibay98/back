@@ -1,6 +1,9 @@
-package io.menglibay.realestateproject.model;
+package io.menglibay.realestateproject.entity;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "rooms")
@@ -13,6 +16,8 @@ public class Room {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "location")
+    private String location;
     @Column(name = "price")
     private int price;
 
@@ -43,11 +48,7 @@ public class Room {
     @Column(name = "bed_num",length = 45)
     private String bedNum;
 
-    @Column(name = "status",length = 45)
-    private String status;
 
-    @Column(name = "booked_date",length = 45)
-    private String bookedDate;
 
     @Column(name = "description",columnDefinition = "LONGTEXT")
     private String description;
@@ -58,10 +59,29 @@ public class Room {
     @Column(name = "small_images")
     private String smallImages;
 
-
     public Room(){
 
     }
+
+    public Room(int id, String title, String location,int price, String floor, String complex, int amount, double square, double kitchenSquare, String conditions, String coordinates, String peopleNum, String bedNum, String status, String bookedDate, String description, String images, String smallImages) {
+        this.id = id;
+        this.title = title;
+        this.location = location;
+        this.price = price;
+        this.floor = floor;
+        this.complex = complex;
+        this.amount = amount;
+        this.square = square;
+        this.kitchenSquare = kitchenSquare;
+        this.conditions = conditions;
+        this.coordinates = coordinates;
+        this.peopleNum = peopleNum;
+        this.bedNum = bedNum;
+        this.description = description;
+        this.images = images;
+        this.smallImages = smallImages;
+    }
+
 
     public int getId() {
         return id;
@@ -159,21 +179,6 @@ public class Room {
         this.bedNum = bedNum;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getBookedDate() {
-        return bookedDate;
-    }
-
-    public void setBookedDate(String bookedDate) {
-        this.bookedDate = bookedDate;
-    }
 
     public String getDescription() {
         return description;
@@ -199,6 +204,7 @@ public class Room {
         this.smallImages = smallImages;
     }
 
+
     @Override
     public String toString() {
         return "Room{" +
@@ -214,8 +220,6 @@ public class Room {
                 ", coordinates='" + coordinates + '\'' +
                 ", peopleNum='" + peopleNum + '\'' +
                 ", bedNum='" + bedNum + '\'' +
-                ", status='" + status + '\'' +
-                ", bookedDate='" + bookedDate + '\'' +
                 ", description='" + description + '\'' +
                 ", images='" + images + '\'' +
                 ", smallImages='" + smallImages + '\'' +

@@ -1,7 +1,7 @@
 package io.menglibay.realestateproject.controller;
 
-import io.menglibay.realestateproject.model.User;
-import io.menglibay.realestateproject.model.UserRole;
+import io.menglibay.realestateproject.entity.User;
+import io.menglibay.realestateproject.entity.UserRole;
 import io.menglibay.realestateproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

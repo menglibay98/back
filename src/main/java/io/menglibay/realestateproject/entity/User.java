@@ -1,8 +1,6 @@
-package io.menglibay.realestateproject.model;
+package io.menglibay.realestateproject.entity;
 
 import jakarta.persistence.*;
-
-import java.math.BigInteger;
 
 @Entity
 @Table(name = "users")

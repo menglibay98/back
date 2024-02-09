@@ -58,11 +58,11 @@ public class SecurityConfig{
                         .requestMatchers(HttpMethod.PUT, "/user/{id}", "/request/{id}", "/room/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/user/{id}", "/request/{id}", "/room/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/request/{id}", "/room/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/bookHistory/{roomId}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/bookHistory/book/{roomId}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/bookHistory/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/bookHistory/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/bookHistory/{roomId}/setFree").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/booking-history/{roomId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/booking-history/book/{roomId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/booking-history/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/booking-history/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/booking-history/{roomId}/setFree").hasRole("ADMIN")
         );
 
 

@@ -1,7 +1,6 @@
 package io.menglibay.realestateproject.controller;
 
-import io.menglibay.realestateproject.model.Room;
-import io.menglibay.realestateproject.model.User;
+import io.menglibay.realestateproject.entity.Room;
 import io.menglibay.realestateproject.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,8 +67,6 @@ public class RoomController {
             room.setCoordinates(updatedRoomData.getCoordinates());
             room.setPeopleNum(updatedRoomData.getPeopleNum());
             room.setBedNum(updatedRoomData.getBedNum());
-            room.setStatus(updatedRoomData.getStatus());
-            room.setBookedDate(updatedRoomData.getBookedDate());
             room.setDescription(updatedRoomData.getDescription());
             room.setImages(updatedRoomData.getImages());
             room.setSmallImages(updatedRoomData.getSmallImages());

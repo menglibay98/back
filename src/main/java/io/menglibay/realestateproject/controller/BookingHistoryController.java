@@ -1,7 +1,9 @@
 package io.menglibay.realestateproject.controller;
 
-import io.menglibay.realestateproject.model.BookingHistory;
+import io.menglibay.realestateproject.entity.BookingHistory;
+import io.menglibay.realestateproject.entity.Room;
 import io.menglibay.realestateproject.service.BookingHistoryService;
+import io.menglibay.realestateproject.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,51 +12,61 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/bookHistory")
+@RequestMapping("/api/booking-history")
 public class BookingHistoryController {
 
+    private final BookingHistoryService bookingHistoryService;
+
+    private final RoomService roomService;
+
     @Autowired
-    private BookingHistoryService bookHistoryService;
-
-
-    @GetMapping("/all")
-    public ResponseEntity<List<BookingHistory>> getAllBookHistory() {
-        List<BookingHistory> allBookHistory = bookHistoryService.getAllBookHistory();
-        return ResponseEntity.ok(allBookHistory);
+    public BookingHistoryController(BookingHistoryService bookingHistoryService,RoomService roomService) {
+        this.bookingHistoryService = bookingHistoryService;
+        this.roomService = roomService;
     }
 
-    @GetMapping("/{roomId}")
-    public ResponseEntity<List<BookingHistory>> getBookHistoryByRoomId(@PathVariable int roomId){
-        List<BookingHistory> bookHistoryList = bookHistoryService.getBookHistoryByRoomId(roomId);
-        return ResponseEntity.ok(bookHistoryList);
+    @GetMapping
+    public ResponseEntity<List<BookingHistory>> getAllBookingHistory() {
+        List<BookingHistory> bookingHistories = bookingHistoryService.getAllBookHistory();
+        return ResponseEntity.ok(bookingHistories);
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingHistory> getBookingHistoryById(@PathVariable int id) {
+        BookingHistory bookingHistory = bookingHistoryService.getBookingHistoryById(id);
+        if (bookingHistory != null) {
+            return ResponseEntity.ok(bookingHistory);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/room/{roomId}")
+    public ResponseEntity<List<BookingHistory>> getBookingHistoryByRoomId(@PathVariable int roomId) {
+        List<BookingHistory> bookingHistories = bookingHistoryService.getBookHistoryByRoomId(roomId);
+        if (!bookingHistories.isEmpty()) {
+            return ResponseEntity.ok(bookingHistories);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
     @PostMapping("/book/{roomId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> bookRoom(@PathVariable int roomId,@RequestBody BookingHistory bookHistory){
-        bookHistoryService.bookRoom(roomId,bookHistory);
-        return ResponseEntity.ok("Room booked succesfully");
+    public BookingHistory bookRoom(@PathVariable int roomId, @RequestBody BookingHistory bookingHistory) {
+        return bookingHistoryService.create(roomId,bookingHistory);
     }
 
+
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> updateBookHistory(@PathVariable int id,
-                                                    @RequestBody BookingHistory updateBookHistory){
-        bookHistoryService.updateBookHistory(id,updateBookHistory);
-        return ResponseEntity.ok("Book history updated successfully");
+    public void updateBookingHistory(@PathVariable int id, @RequestBody BookingHistory updatedBookingHistory) {
+        bookingHistoryService.updateBookHistory(id, updatedBookingHistory);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> deleteBookHistory(@PathVariable int id){
-        bookHistoryService.deleteBookHistory(id);
-        return ResponseEntity.ok("Book history deleted successfully");
-    }
-
-    @PutMapping("/rooms/{roomId}/setFree")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> setRoomFree(@PathVariable int roomId){
-        bookHistoryService.setRoomFree(roomId);
-        return ResponseEntity.ok("Room set free successfully");
+    public void deleteBookingHistory(@PathVariable int id) {
+        bookingHistoryService.deleteBookHistory(id);
     }
 }

@@ -1,7 +1,6 @@
 package io.menglibay.realestateproject.controller;
 
-import io.menglibay.realestateproject.model.Request;
-import io.menglibay.realestateproject.model.User;
+import io.menglibay.realestateproject.entity.Request;
 import io.menglibay.realestateproject.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +27,7 @@ public class RequestController {
     @GetMapping
     public ResponseEntity<List<Request>> getAllRequests() {
         List<Request> requests = service.getAllRequests();
-        return ResponseEntity.ok(requests);
+        return ResponseEntity.ok().body(requests);
     }
 
 
@@ -40,29 +38,42 @@ public class RequestController {
     }
 
 
+//    @PostMapping("/create")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public List<Request> createMultipleRequests(@RequestBody List<Request> requests) {
+//        List<Request> savedRequests = new ArrayList<>();
+//        for (Request req : requests) {
+//            savedRequests.add(service.saveRequest(req));
+//        }
+//
+//        return savedRequests;
+//    }
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<Request> createMultipleUsers(@RequestBody List<Request> requests) {
-        List<Request> savedRequests = new ArrayList<>();
-        for (Request req : requests) {
-            savedRequests.add(service.saveRequest(req));
-        }
-
-        return savedRequests;
+    public Request createRequest(@RequestBody Request request) {
+        // Save the request using the service
+        return service.saveRequest(request);
     }
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Request updateRequest(@PathVariable int id, @RequestBody Request updateReq) {
-        Optional<Request> existingReq = Optional.ofNullable(service.getRequestById(id));
+        if (updateReq == null || updateReq.getName() == null || updateReq.getIin() == null || updateReq.getNumber() == null || updateReq.getStatus() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body is null or contains invalid data");
+        }
 
-        return existingReq.map(req -> {
-            req.setName(updateReq.getName());
-            req.setIin(updateReq.getIin());
-            req.setNumber(updateReq.getNumber());
-            req.setStatus(updateReq.getStatus());
-            return service.saveRequest(req);
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Request existingReq = service.getRequestById(id);
+        if (existingReq == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Request not found with id: " + id);
+        }
+
+        existingReq.setName(updateReq.getName());
+        existingReq.setIin(updateReq.getIin());
+        existingReq.setNumber(updateReq.getNumber());
+        existingReq.setStatus(updateReq.getStatus());
+
+        return service.saveRequest(existingReq);
     }
+
 
 
     @DeleteMapping("/{id}")

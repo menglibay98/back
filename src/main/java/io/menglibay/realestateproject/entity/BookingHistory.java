@@ -1,10 +1,9 @@
-package io.menglibay.realestateproject.model;
+package io.menglibay.realestateproject.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.ManyToAny;
 
 @Entity
-@Table(name = "bookHistory")
+@Table(name = "bookhistory")
 public class BookingHistory {
 
     @Id
@@ -27,25 +26,27 @@ public class BookingHistory {
     @Column(name = "comments")
     private String comments;
 
-    @ManyToOne
-    @JoinColumn(name = "roomId")
-    private Room room;
 
     @Column(name = "status",nullable = false,columnDefinition = "int default 0")
     private int status;
+
+    @ManyToOne
+    @JoinColumn(name = "roomId", referencedColumnName = "id")
+    private Room room;
+
 
     public BookingHistory(){
 
     }
 
-    public BookingHistory(String fullname, String iin, String startDate, String endDate, String comments, Room room, int status) {
+    public BookingHistory(String fullname, String iin, String startDate, String endDate, String comments, int status,Room room) {
         this.fullname = fullname;
         this.iin = iin;
         this.startDate = startDate;
         this.endDate = endDate;
         this.comments = comments;
-        this.room = room;
         this.status = status;
+        this.room = new Room();
     }
 
     public int getId() {

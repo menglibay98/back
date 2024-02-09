@@ -1,10 +1,6 @@
-package io.menglibay.realestateproject.model;
+package io.menglibay.realestateproject.entity;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "requests")

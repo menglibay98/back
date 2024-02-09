@@ -1,7 +1,7 @@
 package io.menglibay.realestateproject.repository;
 
-import io.menglibay.realestateproject.model.User;
-import io.menglibay.realestateproject.model.UserRole;
+import io.menglibay.realestateproject.entity.User;
+import io.menglibay.realestateproject.entity.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,14 +1,12 @@
 package io.menglibay.realestateproject.service;
 
-import io.menglibay.realestateproject.model.Request;
+import io.menglibay.realestateproject.entity.Request;
 import io.menglibay.realestateproject.repository.RequestRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
